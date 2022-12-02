@@ -15,7 +15,10 @@ for i in calories:
     except IndexError:
         break
 
-total_cals.sort()
+total_cals.sort(reverse=True)
+top_three = 0
 
-for i in total_cals:
-    print(i)
+for i in range(0, 3):
+    top_three += total_cals[i]
+
+print(top_three)
