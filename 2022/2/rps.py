@@ -29,10 +29,7 @@ def get_outcome(game):
     return str(game[2])
 
 def get_score(choice, outcome, scores):
-    outcome_score = int(scores.get('outcome').get(str(outcome)))
-    choice_score = int(scores.get('choice').get(str(choice)))
-
-    return outcome_score+choice_score
+    return scores.get('choice').get(choice, 0)+scores.get('outcome').get(outcome, 0)
 
 final_scores = []
 
