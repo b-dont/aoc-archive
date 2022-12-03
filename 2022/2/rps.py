@@ -4,26 +4,21 @@ with open('input.txt') as f:
 # A, X: Rock
 # B, Y: Paper
 # C, Z: Scissors
-def play(game):
-    match game:
-        case "A Y":
-            return str("Win")
-        case "A X":
-            return str("Draw")
-        case "A Z":
-            return str("Loss")
-        case "B Y":
-            return str("Draw")
-        case "B X":
-            return str("Win")
-        case "B Z":
-            return str("Loss")
-        case "C Y":
-            return str("Loss")
-        case "C X":
-            return str("Win")
-        case "C Z":
-            return str("Draw")
+
+left_choice = {
+    'A': {'X': 'Draw', 'Y': 'Win', 'Z': 'Loss'},
+    'B': {'X': 'Loss', 'Y': 'Draw', 'Z': 'Win'},
+    'C': {'X': 'Win', 'Y': 'Loss', 'Z': 'Draw'}
+}
+
+right_choice = {
+    'X': {'A': 'Draw', 'B': 'Loss', 'C': 'Win'},
+    'Y': {'A': 'Win', 'B': 'Draw', 'C': 'Loss'},
+    'Z': {'A': 'Loss', 'B': 'Win', 'C': 'Draw'}
+}
+
+def play(game, column):
+    return column.get(game[2]).get(game[0])
 
 def outcome_score(outcome):
     if outcome == "Win":
@@ -46,8 +41,7 @@ def choice_score(choice):
 scores = []
 
 for i in game_input:
-    outcome = play(i[0:3])
-    scores.append(outcome_score(outcome))
-    scores.append(choice_score(i[2]))
+    outcome = play(i[:3], right_choice)
+    scores.append(outcome_score(outcome)+choice_score(i[2]))
 
 print(sum(scores))
