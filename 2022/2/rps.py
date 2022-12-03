@@ -6,9 +6,9 @@ with open('input.txt') as f:
 # C: Scissors | Z: Win
 
 rules = {
-    'A': {'Draw': 'A', 'Win': 'C', 'Loss': 'B'},
-    'B': {'Draw': 'B', 'Win': 'A', 'Loss': 'C'},
-    'C': {'Draw': 'C', 'Win': 'B', 'Loss': 'A'},
+    'A': {'A': 'Draw', 'C': 'Win', 'B': 'Loss'},
+    'B': {'B': 'Draw', 'A': 'Win', 'C': 'Loss'},
+    'C': {'C': 'Draw', 'B': 'Win', 'A': 'Loss'},
 }
 
 decrypt = {
@@ -22,20 +22,20 @@ scores = {
     'outcome': {'Win': 6, 'Draw': 3, 'Loss': 0}
 }
 
-def get_choice(game, rules, decrypt):
-    return str(decrypt.get(game[2]).get(game[0]))
+def get_choice(game, decrypt):
+    return decrypt[game[2]][game[0]]
 
-def get_outcome(game):
-    return str(game[2])
+def get_outcome(game, choice, rules):
+    return rules[game[0]][choice]
 
 def get_score(choice, outcome, scores):
-    return scores.get('choice').get(choice, 0)+scores.get('outcome').get(outcome, 0)
+    return scores['choice'][choice]+scores['outcome'][outcome]
 
 final_scores = []
 
 for i in game_input:
-    choice = get_choice(i, rules, decrypt)
-    outcome = get_outcome(i)
+    choice = get_choice(i, decrypt)
+    outcome = get_outcome(i, choice, rules)
     final_scores.append(get_score(choice, outcome, scores))
 
 print(sum(final_scores))
