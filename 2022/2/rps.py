@@ -49,3 +49,5 @@ for i in game_input:
     outcome = play(i[0:3])
     scores.append(outcome_score(outcome))
     scores.append(choice_score(i[2]))
+
+print(sum(scores))
