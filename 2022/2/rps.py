@@ -28,7 +28,7 @@ def get_choice(game, rules, decrypt):
 def get_outcome(game):
     return str(game[2])
 
-def get_score(outcome, choice, scores):
+def get_score(choice, outcome, scores):
     outcome_score = int(scores.get('outcome').get(str(outcome)))
     choice_score = int(scores.get('choice').get(str(choice)))
 
@@ -39,6 +39,6 @@ final_scores = []
 for i in game_input:
     choice = get_choice(i, rules, decrypt)
     outcome = get_outcome(i)
-    final_scores.append(get_score(outcome, choice, scores))
+    final_scores.append(get_score(choice, outcome, scores))
 
 print(sum(final_scores))
