@@ -5,12 +5,6 @@ with open('input.txt') as f:
 # B: Paper    | Y: Draw
 # C: Scissors | Z: Win
 
-rules = {
-    'A': {'A': 'Draw', 'C': 'Win', 'B': 'Loss'},
-    'B': {'B': 'Draw', 'A': 'Win', 'C': 'Loss'},
-    'C': {'C': 'Draw', 'B': 'Win', 'A': 'Loss'},
-}
-
 decrypt = {
     'X': {'A': 'C', 'B': 'A', 'C': 'B'},
     'Y': {'A': 'A', 'B': 'B', 'C': 'C'},
@@ -19,14 +13,11 @@ decrypt = {
 
 scores = {
     'choice': {'A': 1, 'B': 2, 'C': 3},
-    'outcome': {'Win': 6, 'Draw': 3, 'Loss': 0}
+    'outcome': {'Z': 6, 'Y': 3, 'X': 0}
 }
 
 def get_choice(game, decrypt):
     return decrypt[game[2]][game[0]]
-
-def get_outcome(game, choice, rules):
-    return rules[game[0]][choice]
 
 def get_score(choice, outcome, scores):
     return scores['choice'][choice]+scores['outcome'][outcome]
@@ -35,7 +26,6 @@ final_scores = []
 
 for i in game_input:
     choice = get_choice(i, decrypt)
-    outcome = get_outcome(i, choice, rules)
-    final_scores.append(get_score(choice, outcome, scores))
+    final_scores.append(get_score(choice, i[2], scores))
 
 print(sum(final_scores))
