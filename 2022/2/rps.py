@@ -1,47 +1,44 @@
 with open('input.txt') as f:
     game_input = f.readlines()
 
-# A, X: Rock
-# B, Y: Paper
-# C, Z: Scissors
+# A: Rock     | X: Loss
+# B: Paper    | Y: Draw
+# C: Scissors | Z: Win
 
-left_choice = {
-    'A': {'X': 'Draw', 'Y': 'Win', 'Z': 'Loss'},
-    'B': {'X': 'Loss', 'Y': 'Draw', 'Z': 'Win'},
-    'C': {'X': 'Win', 'Y': 'Loss', 'Z': 'Draw'}
+rules = {
+    'A': {'Draw': 'A', 'Win': 'C', 'Loss': 'B'},
+    'B': {'Draw': 'B', 'Win': 'A', 'Loss': 'C'},
+    'C': {'Draw': 'C', 'Win': 'B', 'Loss': 'A'},
 }
 
-right_choice = {
-    'X': {'A': 'Draw', 'B': 'Loss', 'C': 'Win'},
-    'Y': {'A': 'Win', 'B': 'Draw', 'C': 'Loss'},
-    'Z': {'A': 'Loss', 'B': 'Win', 'C': 'Draw'}
+decrypt = {
+    'X': {'A': 'C', 'B': 'A', 'C': 'B'},
+    'Y': {'A': 'A', 'B': 'B', 'C': 'C'},
+    'Z': {'A': 'B', 'B': 'C', 'C': 'A'},
 }
 
-def play(game, column):
-    return column.get(game[2]).get(game[0])
+scores = {
+    'choice': {'A': 1, 'B': 2, 'C': 3},
+    'outcome': {'Win': 6, 'Draw': 3, 'Loss': 0}
+}
 
-def outcome_score(outcome):
-    if outcome == "Win":
-        return int(6)
-    elif outcome == "Draw":
-        return int(3)
-    else:
-        return int(0)
+def get_choice(game, rules, decrypt):
+    return str(decrypt.get(game[2]).get(game[0]))
 
-def choice_score(choice):
-    if (choice == "A") or (choice == "X"):
-        return int(1)
-    elif (choice == "B") or (choice == "Y"):
-        return int(2)
-    elif (choice == "C") or (choice == "Z"):
-        return int(3)
-    else:
-        return int(0)
+def get_outcome(game):
+    return str(game[2])
 
-scores = []
+def get_score(outcome, choice, scores):
+    outcome_score = int(scores.get('outcome').get(str(outcome)))
+    choice_score = int(scores.get('choice').get(str(choice)))
+
+    return outcome_score+choice_score
+
+final_scores = []
 
 for i in game_input:
-    outcome = play(i[:3], right_choice)
-    scores.append(outcome_score(outcome)+choice_score(i[2]))
+    choice = get_choice(i, rules, decrypt)
+    outcome = get_outcome(i)
+    final_scores.append(get_score(outcome, choice, scores))
 
-print(sum(scores))
+print(sum(final_scores))
