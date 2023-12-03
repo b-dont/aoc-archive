@@ -36,11 +36,8 @@ with open("input.txt") as input:
     for line in input:
         results = get_results(line)
         game_is_possible = True
-        print("Results are: ", results)
         for result in results:
-            print("Result is: ", result)
             for pair in result.split(", "):
-                print("Pairs are: ", pair)
                 if not checkif_possible(pair.split(" ")):
                     game_is_possible = False
                     break
