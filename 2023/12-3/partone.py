@@ -50,15 +50,11 @@ def check_adjacent(num, lines):
     else:
         range = (num.get_x() - 1, num.get_x() + len(num.num) + 1)
 
-    print("Range for num: ", num.num, range)
-
     regex = re.compile(r"[^\d\.]")
     for line in lines:
-        print("Searching line: ", "\n", line, "\nWith range of: ", range)
         results = regex.finditer(line, pos=range[0], endpos=range[1])
         for result in results:
             if result is not None:
-                print("Found result ", result.group(0))
                 num.is_part = True
 
 
@@ -87,19 +83,15 @@ with open("input.txt") as input:
 
     for num in all_numbers:
         adjacent_lines = []
-        print("Adding home line: ", num.line)
         adjacent_lines.append(num.line)
 
         if num.get_y() == 0:
             adjacent_lines.append(lines[num.get_y() + 1])
-            print(num.num, " is 0 index, adding line: ", lines[num.get_y() + 1])
         elif num.get_y() == len(lines) - 1:
             adjacent_lines.append(lines[num.get_y() - 1])
-            print(num.num, " is last index, adding lines: ", lines[num.get_y() - 1])
         else:
             adjacent_lines.append(lines[num.get_y() - 1])
             adjacent_lines.append(lines[num.get_y() + 1])
-            print("Pulling adjacent lines for num ", num.num, "\n", lines[num.get_y() - 1], "\n", lines[num.get_y() + 1])
 
         check_adjacent(num, adjacent_lines)
 
