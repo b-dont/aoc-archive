@@ -8,7 +8,6 @@ def order_results(results):
         "green": []
     }
 
-    print("Results: ", results)
     for result in results:
         for pair in result.split(", "):
             ordered_results[pair.split(" ")[1].rstrip()].append(int(pair.split(" ")[0]))
